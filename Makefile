@@ -35,4 +35,9 @@ build-app-container:
 	@rm -f Dockerfile.run
 
 run:
-	@docker run --interactive --tty --rm -p 8081:8081 $(NAME)-app || true
+	@docker run --interactive --tty --rm --publish 8081:8081 $(NAME)-app || true
+
+export:
+	@docker create --hostname $(NAME) --name $(NAME) --publish 8081:8081 $(NAME)-app
+	@docker export -o $(NAME).docker-export $(NAME)
+	@docker rm $(NAME)
