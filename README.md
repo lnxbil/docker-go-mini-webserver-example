@@ -17,11 +17,20 @@ Besides the `make` and `docker` command, internet access is also required.
 # Manual Distribution
 
 If you do not want to use a registry to distribute the docker image, you
-can create a container, export and import it on the destination docker
-machine:
+can save the image and load it on the destination docker machine. Be aware
+that this is not an `export` and `import` operation, but an `save` and `load`
+one:
 
-    make export
+    make save
 
-to export it, copy the file to the remote location's `/tmp`folder and import
+to save it copy the file to the remote location's `/tmp`folder and load it
+there:
 
-    docker import /tmp/docker-go-mini-webserver-example.docker-export
+    docker load -i /tmp/docker-go-mini-webserver-example.docker-save
+
+Afterwards, you'll have an image, not an container that can now be used
+to create a persistent or throw-away container.
+
+    docker run \
+      --interactive --tty --rm --publish 8081:8081 \
+      docker-go-mini-webserver-example-app:latest

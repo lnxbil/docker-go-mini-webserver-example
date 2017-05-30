@@ -37,7 +37,10 @@ build-app-container:
 run:
 	@docker run --interactive --tty --rm --publish 8081:8081 $(NAME)-app || true
 
-export:
-	@docker create --hostname $(NAME) --name $(NAME) --publish 8081:8081 $(NAME)-app
-	@docker export -o $(NAME).docker-export $(NAME)
-	@docker rm $(NAME)
+save:
+	@docker save -o $(NAME).docker-save $(NAME)-app
+	@echo "File written to:"
+	@ls -lh $(NAME).docker-save
+
+clean:
+	@rm -f docker-go-mini-webserver-example*
