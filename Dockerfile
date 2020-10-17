@@ -1,4 +1,4 @@
-FROM docker-registry.exirius.local/go/docker:1.13 AS build
+FROM golang:1.15-alpine AS build
 WORKDIR /go/src/app
 
 # Create appuser.
